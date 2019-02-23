@@ -1,0 +1,23 @@
+﻿@model IndexViewModel
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+        <h2>Choose a Talk:</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
+        <ul class="list-group">
+            @foreach (var talk in Model.Talks)
+            {
+                <li class="list-group-item">
+                    <a asp-controller="Game" asp-action="Get" asp-route-talkId="@talk.Id">@talk.Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+﻿name,start_time,end_time,time_zone
+The Moon: Gateway to the Solar System,2019-02-28T08:00:00,2019-02-28T09:00:00,1
+Insecure Transit - Microservice Security,2019-02-28T09:20:00,2019-02-28T10:20:00,1
+C# 8 and Beyond,2019-02-28T09:20:00,2019-02-28T10:20:00,1
+The secret unit testing tools no-one ever told you about,2019-02-28T09:20:00,2019-02-28T10:20:00,1
+Neural Networks: A Primer,2019-02-28T09:20:00,2019-02-28T10:20:00,1
+Securing Web Applications and APIs with ASP.NET Core 2.2 and 3.0,2019-02-28T10:40:00,2019-02-28T11:40:00,1
+How to build a social network entirely on serverless,2019-02-28T10:40:00,2019-02-28T11:40:00,1
+Using Kotlin Coroutines for Asynchronous and Concurrent Programming,2019-02-28T10:40:00,2019-02-28T11:40:00,1
+Six Little Lines of Fail,2019-02-28T10:40:00,2019-02-28T11:40:00,1
+Embracing Messaging and Eventual Consistency in your Microservices Solutions,2019-02-28T12:40:00,2019-02-28T13:40:00,1
+I have 99 problems but GraphQL is not one,2019-02-28T12:40:00,2019-02-28T13:40:00,1
+The Enterprise DevOps Challenge,2019-02-28T12:40:00,2019-02-28T13:40:00,1
+Adapting ASP.NET Core MVC to your needs,2019-02-28T12:40:00,2019-02-28T13:40:00,1
+Async Injection,2019-02-28T14:00:00,2019-02-28T15:00:00,1
+Building Clients for OpenID Connect/OAuth2-based Systems,2019-02-28T14:00:00,2019-02-28T15:00:00,1
+Finding your service boundaries - a practical guide,2019-02-28T14:00:00,2019-02-28T15:00:00,1
+Rock-Solid Components with TypeScript and GraphQL,2019-02-28T14:00:00,2019-02-28T15:00:00,1
+Using C# Expression Trees in the Real World,2019-02-28T15:20:00,2019-02-28T16:20:00,1
+Implement DevSecOps in Azure,2019-02-28T15:20:00,2019-02-28T16:20:00,1
+Natural Language Processing with Deep Learning and TensorFlow,2019-02-28T15:20:00,2019-02-28T16:20:00,1
+"ARMGDN - Build modern web apps using Apollo, React, MobX GraphQL, Db and Node.js",2019-02-28T15:20:00,2019-02-28T16:20:00,1
+Hacking your work life balance to take over the world,2019-02-28T16:40:00,2019-02-28T17:40:00,1
+Functional-first programming with F#,2019-02-28T16:40:00,2019-02-28T17:40:00,1
+Practical Security for Web Applications,2019-02-28T16:40:00,2019-02-28T17:40:00,1
+.NET Rocks Live,2019-02-28T16:40:00,2019-02-28T17:40:00,1
+How to seamlessly transition from Developer to Leader,2019-03-01T08:00:00,2019-03-01T09:00:00,1
+"Tabs, spaces and salaries: a data science detective story",2019-03-01T08:00:00,2019-03-01T09:00:00,1
+Give it a REST - Tips for designing and consuming public APIs,2019-03-01T08:00:00,2019-03-01T09:00:00,1
+Building Progressive Web Apps with React,2019-03-01T08:00:00,2019-03-01T09:00:00,1
+Kubernetes - going beyond the basics,2019-03-01T09:20:00,2019-03-01T10:20:00,1
+A Practical Guide to Dashboarding,2019-03-01T09:20:00,2019-03-01T10:20:00,1
+Need for speed 8 - performance tuning of your web application,2019-03-01T09:20:00,2019-03-01T10:20:00,1
+"Build software like a bag of marbles, not a castle of LEGO",2019-03-01T09:20:00,2019-03-01T10:20:00,1
+Containers for Real Integration Tests,2019-03-01T10:40:00,2019-03-01T11:40:00,1
+"Dungeons, Dragons and Functions",2019-03-01T10:40:00,2019-03-01T11:40:00,1
+Measure All The Things with App Metrics,2019-03-01T10:40:00,2019-03-01T11:40:00,1
+"Using Service Meshes and Kubernetes to Solve Service-to-Service Communications, Scaling and Security",2019-03-01T10:40:00,2019-03-01T11:40:00,1
+Build vs Buy: Software Systems at Jurassic Park,2019-03-01T12:40:00,2019-03-01T13:40:00,1
+"Drones, AI and IoT - What's all the buzz about?",2019-03-01T12:40:00,2019-03-01T13:40:00,1
+HTTPS in ASP.NET Core 2 in Docker Linux Containers Deep Dive,2019-03-01T12:40:00,2019-03-01T13:40:00,1
+Breaking Down Your Build: Architectural Patterns For A More Efficient Pipeline,2019-03-01T12:40:00,2019-03-01T13:40:00,1
+Reactive DDD - When Concurrent Waxes Fluent,2019-03-01T14:00:00,2019-03-01T15:00:00,1
+Handy Tools for Designing Great Web APIs,2019-03-01T14:00:00,2019-03-01T15:00:00,1
+Manual Memory management in .NET Framework,2019-03-01T14:00:00,2019-03-01T15:00:00,1
+Migrating to Microservice Databases: From Relational Monolith to Distributed Data,2019-03-01T14:00:00,2019-03-01T15:00:00,1
+The Web That Never Was,2019-03-01T15:20:00,2019-03-01T16:20:00,1
+Leadership Guide for the Reluctant Leader,2019-03-01T15:20:00,2019-03-01T16:20:00,1
+Agile Software Architecture,2019-03-01T15:20:00,2019-03-01T16:20:00,1
+Real Quantum Computing,2019-03-01T15:20:00,2019-03-01T16:20:00,1
