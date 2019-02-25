@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Pages" />
+    <Folder Include="wwwroot\lib\bootswatch" />
   </ItemGroup>
 
 </Project>

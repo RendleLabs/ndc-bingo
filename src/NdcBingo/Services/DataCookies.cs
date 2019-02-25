@@ -9,6 +9,8 @@ namespace NdcBingo.Services
     public class DataCookies : IDataCookies
     {
         private const string PlayerNameKey = "player_name";
+        private const string PlayerSquaresKey = "player_squares";
+        private const string PlayerClaimsKey = "player_claims";
         private readonly IHttpContextAccessor _contextAccessor;
 
         public DataCookies(IHttpContextAccessor contextAccessor)
@@ -29,11 +31,9 @@ namespace NdcBingo.Services
             });
         }
 
-        private static string PlayerSquaresKey(long talkId) => $"player_squares_{talkId}";
-
-        public bool TryGetPlayerSquares(int talkId, out int[] ids)
+        public bool TryGetPlayerSquares(out int[] ids)
         {
-            if (!_contextAccessor.HttpContext.Request.Cookies.TryGetValue(PlayerSquaresKey(talkId), out var value))
+            if (!_contextAccessor.HttpContext.Request.Cookies.TryGetValue(PlayerSquaresKey, out var value))
             {
                 ids = null;
                 return false;
@@ -46,20 +46,18 @@ namespace NdcBingo.Services
             return true;
         }
 
-        public void SetPlayerSquares(int talkId, IEnumerable<Square> squares)
+        public void SetPlayerSquares(IEnumerable<Square> squares)
         {
             var value = string.Join(',', squares.Select(square => square.Id.ToString()));
-            _contextAccessor.HttpContext.Response.Cookies.Append(PlayerSquaresKey(talkId), value, new CookieOptions
+            _contextAccessor.HttpContext.Response.Cookies.Append(PlayerSquaresKey, value, new CookieOptions
             {
                 MaxAge = TimeSpan.FromDays(7)
             });
         }
         
-        private static string PlayerClaimsKey(long talkId) => $"player_claims_{talkId}";
-        
-        public bool TryGetPlayerClaims(int talkId, out int[] ids)
+        public bool TryGetPlayerClaims(out int[] ids)
         {
-            if (!_contextAccessor.HttpContext.Request.Cookies.TryGetValue(PlayerClaimsKey(talkId), out var value))
+            if (!_contextAccessor.HttpContext.Request.Cookies.TryGetValue(PlayerClaimsKey, out var value))
             {
                 ids = null;
                 return false;
@@ -73,11 +71,11 @@ namespace NdcBingo.Services
             return true;
         }
 
-        public void SetPlayerClaims(int talkId, int[] claims)
+        public void SetPlayerClaims(int[] claims)
         {
             var value = string.Join(',', claims.Select(c => c.ToString()));
             
-            _contextAccessor.HttpContext.Response.Cookies.Append(PlayerClaimsKey(talkId), value, new CookieOptions
+            _contextAccessor.HttpContext.Response.Cookies.Append(PlayerClaimsKey, value, new CookieOptions
             {
                 MaxAge = TimeSpan.FromDays(7),
                 IsEssential = true

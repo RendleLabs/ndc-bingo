@@ -10,34 +10,21 @@ namespace NdcBingo.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ITalkData _talkData;
         private readonly IPlayerData _playerData;
         private readonly ILogger<HomeController> _logger;
         
-        public HomeController(ITalkData talkData, IPlayerData playerData, ILogger<HomeController> logger)
+        public HomeController(IPlayerData playerData, ILogger<HomeController> logger)
         {
-            _talkData = talkData;
             _playerData = playerData;
             _logger = logger;
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var talks = await _talkData.GetCurrentTalks(DateTimeOffset.UtcNow);
-            var vm = new IndexViewModel(talks);
+            var vm = new IndexViewModel();
             
-            if (!talks.IsNullOrEmpty())
-            {
-                return View(vm);
-            }
-
-            var nextTalk = await _talkData.GetNextTalk(DateTimeOffset.UtcNow);
-            if (nextTalk != null)
-            {
-                vm.NextTalkTime = nextTalk.StartTime.ToOffset(TimeSpan.FromHours(nextTalk.TimeZone));
-            }
-            return View("Landing", vm);
+            return View(vm);
         }
 
         public IActionResult Privacy()

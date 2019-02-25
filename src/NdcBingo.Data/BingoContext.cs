@@ -9,7 +9,6 @@ namespace NdcBingo.Data
         }
 
         public DbSet<Square> Squares { get; set; }
-        public DbSet<Talk> Talks { get; set; }
         public DbSet<Player> Players { get; set; }
         
         protected override void OnModelCreating(ModelBuilder builder)

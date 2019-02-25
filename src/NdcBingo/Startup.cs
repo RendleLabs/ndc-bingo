@@ -27,23 +27,16 @@ namespace NdcBingo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-
             services.AddDbContextPool<BingoContext>(options =>
             {
                 options.UseNpgsql(Configuration.GetConnectionString("Bingo"));
                 options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
+            services.AddHttpContextAccessor();
             services.AddSingleton<IPlayerIdGenerator, PlayerIdGenerator>();
             services.AddScoped<IPlayerData, PlayerData>();
             services.AddScoped<ISquareData, SquareData>();
-            services.AddScoped<ITalkData, TalkData>();
             services.AddSingleton<IDataCookies, DataCookies>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -62,7 +55,6 @@ namespace NdcBingo
             }
 
             app.UseStaticFiles();
-            app.UseCookiePolicy();
 
             app.UseMvc();
         }

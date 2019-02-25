@@ -7,9 +7,9 @@ namespace NdcBingo.Services
     {
         bool TryGetPlayerCode(out string code);
         void SetPlayerCode(string code);
-        bool TryGetPlayerSquares(int talkId, out int[] ids);
-        void SetPlayerSquares(int talkId, IEnumerable<Square> squares);
-        bool TryGetPlayerClaims(int talkId, out int[] ids);
-        void SetPlayerClaims(int talkId, int[] claims);
+        bool TryGetPlayerSquares(out int[] ids);
+        void SetPlayerSquares(IEnumerable<Square> squares);
+        bool TryGetPlayerClaims(out int[] ids);
+        void SetPlayerClaims(int[] claims);
     }
 }

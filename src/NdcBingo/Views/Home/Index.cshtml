@@ -5,19 +5,24 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-        <h2>Choose a Talk:</h2>
+        <h2>NDC Bingo</h2>
+        <p class="lead">at NDC Porto 2019</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-        <ul class="list-group">
-            @foreach (var talk in Model.Talks)
-            {
-                <li class="list-group-item">
-                    <a asp-controller="Game" asp-action="Get" asp-route-talkId="@talk.Id">@talk.Name</a>
-                </li>
-            }
-        </ul>
+        <p>Welcome to NDC Porto! I've made this little game you can play to help you enjoy the conference even more.
+            When you click <strong>Play</strong>, you'll get your own personal Bingo card with 25 things to tick off.
+            Some are things you might hear in talks. Others are little challenges for you to complete.
+            Collect rows, columns, or the whole square. It's up to you!</p>
+        <p>You will also be generating (anonymous) metrics data for Mark Rendle's &quot;Measure All The Things&quot; talk,
+            which will make him super happy.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-10 offset-sm-1 col-md-6 offset-md-3 col-lg-4 offset-lg-4 col-xl-2 offset-xl-5">
+        <a asp-controller="Game" asp-action="Play" class="btn btn-lg btn-block btn-success">Play</a>
     </div>
 </div>
