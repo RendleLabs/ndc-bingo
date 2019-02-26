@@ -16,7 +16,7 @@ namespace NdcBingo.Data
                 _generator.GetBytes(bytes);
             }
 
-            return BitConverter.ToInt64(bytes, 0);
+            return Math.Abs(BitConverter.ToInt64(bytes, 0));
         }
     }
 }

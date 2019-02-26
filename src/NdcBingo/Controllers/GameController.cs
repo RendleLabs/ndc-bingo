@@ -32,6 +32,7 @@ namespace NdcBingo.Controllers
             }
             
             var vm = await CreateGameViewModel();
+            vm.ColumnCount = Constants.SquaresPerLine;
             
             return View(vm);
         }
@@ -78,7 +79,7 @@ namespace NdcBingo.Controllers
             var squares = await _squareData.GetRandomSquaresAsync(Constants.SquareCount);
             vm = new GameViewModel
             {
-                Squares = squares.Select(s => new SquareViewModel(s.Id, s.Text)).ToArray(),
+                Squares = squares.Select(s => new SquareViewModel(s.Id, s.Text, s.Type, s.Description)).ToArray(),
                 Claims = new int[Constants.SquareCount]
             };
             _dataCookies.SetPlayerSquares(squares);
@@ -91,7 +92,7 @@ namespace NdcBingo.Controllers
             var squares = await _squareData.GetSquaresAsync(squareIds);
             var vm = new GameViewModel
             {
-                Squares = squares.Select(s => new SquareViewModel(s.Id, s.Text)).ToArray()
+                Squares = squares.Select(s => new SquareViewModel(s.Id, s.Text, s.Type, s.Description)).ToArray()
             };
             if (_dataCookies.TryGetPlayerClaims(out var claims))
             {

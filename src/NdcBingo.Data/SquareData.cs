@@ -17,7 +17,7 @@ namespace NdcBingo.Data
         public async Task<Square[]> GetRandomSquaresAsync(int limit)
         {
             var cn = _context.Database.GetDbConnection();
-            var squares = await cn.QueryAsync<Square>("select id, text from squares order by random() limit @limit", new {limit});
+            var squares = await cn.QueryAsync<Square>("select id, text, type, description from squares order by random() limit @limit", new {limit});
             return squares.ToArray();
         }
 

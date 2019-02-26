@@ -16,11 +16,11 @@
 <form asp-controller="Players" asp-action="CreatePlayer" method="post">
   <div class="form-group">
     <label asp-for="Player.Name">Name</label>
-    <input type="text" asp-for="Player.Name" class="form-control form-control-lg" placeholder="Player Name">
+    <input type="text" asp-for="Player.Name" name="Name" class="form-control form-control-lg" placeholder="Player Name">
   </div>
   <div class="form-group">
     <label asp-for="Player.Code">Code</label>
-    <input type="text" asp-for="Player.Code" class="form-control form-control-lg" placeholder="Player Code">
+    <input type="text" asp-for="Player.Code" name="Code" class="form-control form-control-lg" placeholder="Player Code">
   </div>
   <button class="btn btn-lg btn-block btn-success" type="submit">OK</button>
 </form>

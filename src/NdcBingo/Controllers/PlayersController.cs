@@ -33,7 +33,7 @@ namespace NdcBingo.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePlayer([FromBody] NewPlayerViewModel model)
+        public async Task<IActionResult> CreatePlayer([FromForm] NewPlayerViewModel model)
         {
             if (!string.IsNullOrWhiteSpace(model.Code))
             {
