@@ -54,3 +54,11 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.bingo-square {
+  cursor: pointer;
+}
+
+.card.bg-success.active {
+  background-color: #3d8b40 !important;
+}

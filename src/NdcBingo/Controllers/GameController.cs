@@ -49,11 +49,16 @@ namespace NdcBingo.Controllers
                 vm = await CreateNewGameViewModel();
             }
 
+            foreach (var square in vm.Squares.Where(s => !s.Claimed))
+            {
+                square.ClaimLink = Url.Action("Claim", new {squareId = square.Id});
+            }
+
             return vm;
         }
 
         [HttpGet("claim/{squareId}")]
-        public IActionResult Claim(int talkId, int squareId)
+        public IActionResult Claim(int squareId)
         {
             if (_dataCookies.TryGetPlayerSquares(out var squareIds))
             {
@@ -70,7 +75,7 @@ namespace NdcBingo.Controllers
                 }
             }
 
-            return RedirectToAction("Play", new {talkId});
+            return RedirectToAction("Play");
         }
 
         private async Task<GameViewModel> CreateNewGameViewModel()

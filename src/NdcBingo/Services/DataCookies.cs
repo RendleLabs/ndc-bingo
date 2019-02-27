@@ -40,8 +40,8 @@ namespace NdcBingo.Services
             }
 
             ids = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(s => int.TryParse(s, out int i) ? i : 0)
-                .Where(i => i > 0)
+                .Select(s => int.TryParse(s, out int i) ? i : -1)
+                .Where(i => i > -1)
                 .ToArray();
             return true;
         }
@@ -64,8 +64,8 @@ namespace NdcBingo.Services
             }
 
             ids = value.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                .Select(s => int.TryParse(s, out int i) ? i : 0)
-                .Where(i => i > 0)
+                .Select(s => int.TryParse(s, out int i) ? i : -1)
+                .Where(i => i > -1)
                 .ToArray();
             
             return true;

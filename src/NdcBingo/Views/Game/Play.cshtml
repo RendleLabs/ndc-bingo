@@ -6,22 +6,33 @@
 }
 
 <div class="row">
-  <div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+  <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
     <h2>Game</h2>
   </div>
 </div>
 @for (int r = 0; r < Model.Squares.Length; r += Model.ColumnCount)
 {
   <div class="row">
-    <div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
+    <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
           <div class="card-deck">
         @for (int s = 0; s < Model.ColumnCount; s++)
         {
           var square = Model.Squares[r + s];
-            <div class="card text-center" style="min-height: 10vh" data-square-text="@square.Text" data-square-type="@square.Type" data-square-description="@square.Description">
+          var color = square.Claimed ? "bg-info" : "bg-success";
+          <div class="card @color text-white text-center bingo-square" style="min-height: 10vh"
+               data-square-id="@square.Id"
+               data-square-text="@square.Text" data-square-type="@square.Type"
+               data-square-description="@square.Description"
+               data-claim-link="@square.ClaimLink">
               @if (square.Type.Equals("tech", StringComparison.OrdinalIgnoreCase))
               {
                 <i class="fas fa-presentation fa-3x mx-auto my-2"></i>
+              } else if (square.Type.Equals("expo", StringComparison.OrdinalIgnoreCase))
+              {
+                <i class="fas fa-hotel fa-3x mx-auto my-2"></i>
+              } else
+              {
+                <i class="fas fa-smile fa-3x mx-auto my-2"></i>
               }
               <h6>@square.Text</h6>
             </div>
@@ -31,4 +42,22 @@
       </div>
     </div>
 }
+<div class="row">
+  <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+    <div class="row">
+      <div class="col-md-9 col-lg-10">
+        <h6 id="selected-text"></h6>
+        <p id="selected-description"></p>
+      </div>
+      <div class="col-md-3 col-lg-2">
+        <a class="btn btn-warning btn-lg btn-block h-100 text-white" id="claim-button">
+          <i class="fas fa-thumbs-up fa-2x"></i>
+        </a>
+      </div>
+    </div>
+</div>
 
+@section Scripts
+{
+  <script src="~/js/game.js"></script>
+}

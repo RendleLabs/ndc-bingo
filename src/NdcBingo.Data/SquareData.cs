@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
@@ -21,6 +22,19 @@ namespace NdcBingo.Data
             return squares.ToArray();
         }
 
-        public Task<Square[]> GetSquaresAsync(int[] ids) => _context.Squares.Where(s => ids.Contains(s.Id)).ToArrayAsync();
+        public async Task<Square[]> GetSquaresAsync(int[] ids)
+        {
+            var squares = new Square[ids.Length];
+            foreach (var s in await _context.Squares.Where(s => ids.Contains(s.Id)).ToListAsync())
+            {
+                int index = Array.IndexOf(ids, s.Id);
+                if (index > -1)
+                {
+                    squares[index] = s;
+                }
+            }
+
+            return squares;
+        }
     }
 }
