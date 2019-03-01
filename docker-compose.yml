@@ -2,17 +2,6 @@ version: '3'
 
 services:
 
-  # notes_migrate:
-  #   build:
-  #     context: ./Notes
-  #     dockerfile: Dockerfile.migrate
-  #   image: slidable/notes-migrate:1.0.0-alpha1
-  #   command: 'Host=db;Database=notes;Username=slidable;Password=SecretSquirrel'
-  #   depends_on:
-  #     - db
-  #   networks:
-  #     - slidablenet
-  
   db:
     image: postgres:10.7-alpine
     environment:
@@ -20,43 +9,28 @@ services:
       POSTGRES_PASSWORD: SecretSquirrel
     ports:
       - 5432:5432
-  
-  # traefik:
-  #   image: traefik:1.5.4-alpine
-  #   command: --web --web.address=:8686 --docker --docker.domain=microstuff.io --docker.watch --docker.exposedbydefault=false \
-  #            --entryPoints='Name:http Address::80' --defaultEntryPoints='http' --accessLogsFile='log/access.log'
-  #   container_name: traefik
-  #   networks:
-  #     - slidablenet
-  #   ports:
-  #     - 80:80
-  #     - 8686:8686
-  #   volumes:
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #     - /dev/null:/traefik.toml
-  
-  # redis:
-  #   image: redis:4.0.8-alpine
-  #   networks:
-  #     - slidablenet
-  
-  # influxdb:
-  #   image: influxdb:1.5.1-alpine
-  #   networks:
-  #     - slidablenet
-  #   environment:
-  #     INFLUXDB_DB: slidable
-  
-  # chronograf:
-  #   image: chronograf:1.4.3.1-alpine
-  #   command: --influxdb-url=http://influxdb:8086
-  #   networks:
-  #     - slidablenet
-  #   ports:
-  #     - 8888:8888
-  #   depends_on:
-  #     - influxdb
 
-# networks:
-#   slidablenet:
-#     driver: bridge
+  influxdb:
+    image: influxdb:1.7.3
+    ports:
+      - 8086:8086
+    environment:
+      INFLUXDB_DB: bingo
+  
+  chronograf:
+    image: chronograf:1.7.5
+    ports:
+      - 8888:8888
+    depends_on:
+      - influxdb
+    links:
+      - influxdb
+  
+  grafana:
+    image: grafana/grafana:5.3.2
+    ports:
+      - 3000:3000
+    depends_on:
+      - influxdb
+    links:
+      - influxdb  

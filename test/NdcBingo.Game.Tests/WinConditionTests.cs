@@ -10,21 +10,21 @@ namespace NdcBingo.Game.Tests
         [MemberData(nameof(WinningHorizontalLines))]
         public void HorizontalLinesWin(int[] claims)
         {
-            Assert.Equal(WinType.HorizontalLine, WinCondition.Check(claims));
+            Assert.Equal(1, WinCondition.Check(claims).Horizontal);
         }
 
         [Theory]
         [MemberData(nameof(WinningVerticalLines))]
         public void VerticalLinesWin(int[] claims)
         {
-            Assert.Equal(WinType.VerticalLine, WinCondition.Check(claims));
+            Assert.Equal(1, WinCondition.Check(claims).Vertical);
         }
 
         [Theory]
         [MemberData(nameof(WinningDiagonalLines))]
         public void DiagonalLinesWin(int[] claims)
         {
-            Assert.Equal(WinType.DiagonalLine, WinCondition.Check(claims));
+            Assert.Equal(1, WinCondition.Check(claims).Diagonal);
         }
 
         public static IEnumerable<object[]> WinningHorizontalLines()

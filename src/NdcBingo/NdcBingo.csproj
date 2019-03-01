@@ -7,6 +7,9 @@
 
 
   <ItemGroup>
+    <PackageReference Include="App.Metrics.AspNetCore.Mvc" Version="3.1.0-alpha-0114" />
+    <PackageReference Include="App.Metrics.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="App.Metrics.Reporting.InfluxDB" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
@@ -14,6 +17,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\NdcBingo.ClrMetrics\NdcBingo.ClrMetrics.csproj" />
     <ProjectReference Include="..\NdcBingo.Data\NdcBingo.Data.csproj" />
     <ProjectReference Include="..\NdcBingo.Game\NdcBingo.Game.csproj" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using App.Metrics;
 using Microsoft.EntityFrameworkCore;
 
 namespace NdcBingo.Data
@@ -8,25 +9,26 @@ namespace NdcBingo.Data
     {
         private readonly BingoContext _context;
         private readonly IPlayerIdGenerator _playerIdGenerator;
+        private readonly IMetrics _metrics;
 
-        public PlayerData(BingoContext context, IPlayerIdGenerator playerIdGenerator)
+        public PlayerData(BingoContext context, IPlayerIdGenerator playerIdGenerator, IMetrics metrics)
         {
             _context = context;
             _playerIdGenerator = playerIdGenerator;
+            _metrics = metrics;
         }
 
         public async Task<(bool, Player)> TryCreate(string name)
         {
-            if (await _context.Players.AnyAsync(p => p.Name == name))
+            using (_metrics.PlayerQueryTimer(nameof(name)))
             {
-                return (false, default);
+                if (await _context.Players.AnyAsync(p => p.Name == name))
+                {
+                    return (false, default);
+                }
             }
 
-            long id;
-            do
-            {
-                id = _playerIdGenerator.Get();
-            } while (await _context.Players.AnyAsync(p => p.Id == id));
+            var id = await GeneratePlayerIdAsync();
 
             var player = new Player
             {
@@ -34,10 +36,27 @@ namespace NdcBingo.Data
                 Name = name
             };
 
+            return await SavePlayerAsync(player);
+        }
+
+        private async Task<(bool, Player)> SavePlayerAsync(Player player)
+        {
             _context.Players.Add(player);
             try
             {
-                await _context.SaveChangesAsync();
+                using (_metrics.PlayerCreateTimer())
+                {
+                    await _context.SaveChangesAsync();
+                }
+
+                int playerCount;
+                using (_metrics.PlayerCountQueryTimer())
+                {
+                    playerCount = await _context.Players.CountAsync();
+                }
+
+                _metrics.SetPlayerCount(playerCount);
+
                 return (true, player);
             }
             catch (Exception e)
@@ -46,17 +65,37 @@ namespace NdcBingo.Data
             }
         }
 
+        private async Task<long> GeneratePlayerIdAsync()
+        {
+            long id;
+            using (_metrics.PlayerIdDuplicateCheckTimer())
+            {
+                do
+                {
+                    id = _playerIdGenerator.Get();
+                } while (await _context.Players.AnyAsync(p => p.Id == id));
+            }
+
+            return id;
+        }
+
         public async Task<Player> Get(long id)
         {
-            var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
-            return player;
+            using (_metrics.PlayerQueryTimer(nameof(id)))
+            {
+                var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
+                return player;
+            }
         }
 
         public async Task<Player> Get(string code)
         {
             var id = Base36.Decode(code);
-            var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
-            return player;
+            using (_metrics.PlayerQueryTimer(nameof(code)))
+            {
+                var player = await _context.Players.FirstOrDefaultAsync(p => p.Id == id);
+                return player;
+            }
         }
     }
 }

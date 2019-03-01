@@ -8,12 +8,13 @@
 <div class="row">
   <div class="col-sm-12 col-md-8 offset-md-2 col-lg-4 offset-lg-4">
     <h2>Player setup</h2>
-    <p>If you already have a code from another device, just enter it below. Otherwise choose a player name.</p>
+    <p>If this is your first sign-in, just enter your name.</p>
+    <p>If you already have a code from another device, enter it in the code field to link this device.</p>
   </div>
 </div>
 <div class="row">
   <div class="col-sm-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3 col-xl-4 offset-xl-4">
-<form asp-controller="Players" asp-action="CreatePlayer" method="post">
+<form asp-controller="Players" asp-action="CreatePlayer" asp-route-returnUrl="@Model.ReturnUrl" method="post">
   <div class="form-group">
     <label asp-for="Player.Name">Name</label>
     <input type="text" asp-for="Player.Name" name="Name" class="form-control form-control-lg" placeholder="Player Name">

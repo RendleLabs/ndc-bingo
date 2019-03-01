@@ -24,15 +24,24 @@ namespace NdcBingo.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Play()
         {
             if (!_dataCookies.TryGetPlayerCode(out var code))
             {
-                return RedirectToAction("New", "Players");
+                return RedirectToAction("New", "Players", new {returnUrl = Url.Action("Play")});
+            }
+
+            var player = await _playerData.Get(code);
+            if (player == null)
+            {
+                return RedirectToAction("New", "Players", new {returnUrl = Url.Action("Play")});
             }
             
             var vm = await CreateGameViewModel();
             vm.ColumnCount = Constants.SquaresPerLine;
+
+            vm.PlayerName = player.Name;
             
             return View(vm);
         }
@@ -58,6 +67,7 @@ namespace NdcBingo.Controllers
         }
 
         [HttpGet("claim/{squareId}")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Claim(int squareId)
         {
             if (_dataCookies.TryGetPlayerSquares(out var squareIds))
@@ -106,7 +116,8 @@ namespace NdcBingo.Controllers
                     vm.Squares[i].Claimed = claims[i] > 0;
                 }
 
-                vm.Winner = WinCondition.Check(claims) != WinType.None;
+                var winningLines = WinCondition.Check(claims);
+                vm.WinningLines = winningLines.Horizontal + winningLines.Vertical + winningLines.Diagonal;
             }
 
             return vm;

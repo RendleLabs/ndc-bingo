@@ -2,9 +2,15 @@
 
 namespace NdcBingo.Game
 {
+    public class WinningLines
+    {
+        public int Horizontal { get; set; }
+        public int Vertical { get; set; }
+        public int Diagonal { get; set; }
+    }
     public static class WinCondition
     {
-        public static WinType Check(int[] claims)
+        public static WinningLines Check(int[] claims)
         {
             double columnCountD = Math.Sqrt((double) claims.Length);
             if (Math.Abs(columnCountD % 1d) > double.Epsilon)
@@ -14,37 +20,28 @@ namespace NdcBingo.Game
 
             int columnCount = (int) columnCountD;
 
-            if (TryHorizontalLine(claims, columnCount, out var horizontalLine)) return horizontalLine;
-
-            if (TryVerticalLine(claims, columnCount, out var verticalLine)) return verticalLine;
-
-            if (TryDiagonalFromTopLeft(claims, columnCount, out var diagonalLine)) return diagonalLine;
-
-            if (TryDiagonalFromTopRight(claims, columnCount, out var winType)) return winType;
-
-            return WinType.None;
+            return new WinningLines
+            {
+                Horizontal = CheckHorizontalLines(claims, columnCount),
+                Vertical = CheckVerticalLines(claims, columnCount),
+                Diagonal = CheckDiagonalFromTopLeft(claims, columnCount) +
+                           CheckDiagonalFromTopRight(claims, columnCount)
+            };
         }
 
-        private static bool TryDiagonalFromTopRight(int[] claims, int columnCount, out WinType winType)
+        private static int CheckDiagonalFromTopRight(int[] claims, int columnCount)
         {
             int claimed = 0;
 
-            for (int i = columnCount - 1, l = claims.Length; i < l; i += columnCount - 1)
+            for (int i = columnCount - 1, c = 0; c < columnCount; i += columnCount - 1, c++)
             {
                 claimed += OneOrZero(claims[i]);
             }
 
-            if (claimed == columnCount)
-            {
-                winType = WinType.DiagonalLine;
-                return true;
-            }
-
-            winType = default;
-            return false;
+            return claimed == columnCount ? 1 : 0;
         }
 
-        private static bool TryDiagonalFromTopLeft(int[] claims, int columnCount, out WinType winType)
+        private static int CheckDiagonalFromTopLeft(int[] claims, int columnCount)
         {
             int claimed = 0;
 
@@ -53,18 +50,12 @@ namespace NdcBingo.Game
                 claimed += OneOrZero(claims[i]);
             }
 
-            if (claimed == columnCount)
-            {
-                winType = WinType.DiagonalLine;
-                return true;
-            }
-
-            winType = default;
-            return false;
+            return claimed == columnCount ? 1 : 0;
         }
 
-        private static bool TryVerticalLine(int[] claims, int columnCount, out WinType winType)
+        private static int CheckVerticalLines(int[] claims, int columnCount)
         {
+            int count = 0;
             for (int i = 0; i < columnCount; i++)
             {
                 int claimed = 0;
@@ -75,17 +66,16 @@ namespace NdcBingo.Game
 
                 if (claimed == columnCount)
                 {
-                    winType = WinType.VerticalLine;
-                    return true;
+                    count++;
                 }
             }
 
-            winType = default;
-            return false;
+            return count;
         }
 
-        private static bool TryHorizontalLine(int[] claims, int columnCount, out WinType winType)
+        private static int CheckHorizontalLines(int[] claims, int columnCount)
         {
+            int count = 0;
             for (int i = 0, l = claims.Length; i < l; i += columnCount)
             {
                 int claimed = 0;
@@ -96,13 +86,11 @@ namespace NdcBingo.Game
 
                 if (claimed == columnCount)
                 {
-                    winType = WinType.HorizontalLine;
-                    return true;
+                    count++;
                 }
             }
 
-            winType = default;
-            return false;
+            return count;
         }
 
         private static int OneOrZero(int n) => n == 0 ? 0 : 1;

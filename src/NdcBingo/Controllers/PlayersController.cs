@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using App.Metrics;
+using App.Metrics.Counter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NdcBingo.Data;
@@ -13,12 +15,14 @@ namespace NdcBingo.Controllers
         private readonly IPlayerData _playerData;
         private readonly IDataCookies _dataCookies;
         private readonly ILogger<PlayersController> _logger;
+        private readonly IMetrics _metrics;
 
-        public PlayersController(ILogger<PlayersController> logger, IDataCookies dataCookies, IPlayerData playerData)
+        public PlayersController(ILogger<PlayersController> logger, IDataCookies dataCookies, IPlayerData playerData, IMetrics metrics)
         {
             _logger = logger;
             _dataCookies = dataCookies;
             _playerData = playerData;
+            _metrics = metrics;
         }
 
         [HttpGet("new")]
@@ -27,13 +31,14 @@ namespace NdcBingo.Controllers
             var model = new NewViewModel
             {
                 Message = message,
-                Player = new NewPlayerViewModel {ReturnUrl = returnUrl}
+                Player = new NewPlayerViewModel(),
+                ReturnUrl = returnUrl
             };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatePlayer([FromForm] NewPlayerViewModel model)
+        public async Task<IActionResult> CreatePlayer([FromForm] NewPlayerViewModel model, [FromQuery]string returnUrl)
         {
             if (!string.IsNullOrWhiteSpace(model.Code))
             {
@@ -50,8 +55,9 @@ namespace NdcBingo.Controllers
                 var (created, player) = await _playerData.TryCreate(model.Name);
                 if (!created)
                 {
-                    return RedirectToAction("New", new {message = "That name is taken."});
+                    return RedirectToAction("New", new {message = "Sorry, that name is taken."});
                 }
+                
                 _dataCookies.SetPlayerCode(player.Code);
             }
             else
@@ -64,7 +70,8 @@ namespace NdcBingo.Controllers
                 return Redirect(model.ReturnUrl);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Play", "Game");
         }
     }
+
 }

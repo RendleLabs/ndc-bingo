@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NdcBingo.ClrMetrics;
 using NdcBingo.Data;
 using NdcBingo.Services;
 
@@ -34,12 +35,15 @@ namespace NdcBingo
             });
 
             services.AddHttpContextAccessor();
+            services.AddSingleton<IDataCookies, DataCookies>();
             services.AddSingleton<IPlayerIdGenerator, PlayerIdGenerator>();
             services.AddScoped<IPlayerData, PlayerData>();
             services.AddScoped<ISquareData, SquareData>();
-            services.AddSingleton<IDataCookies, DataCookies>();
+            services.AddHostedService<ClrMetricsService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddMetrics();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

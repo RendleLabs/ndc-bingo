@@ -8,6 +8,7 @@ using NdcBingo.Models;
 
 namespace NdcBingo.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly IPlayerData _playerData;
@@ -27,6 +28,7 @@ namespace NdcBingo.Controllers
             return View(vm);
         }
 
+        [HttpGet("privacy")]
         public IActionResult Privacy()
         {
             return View();

@@ -23,6 +23,7 @@ namespace NdcBingo.Controllers
         }
 
         [HttpGet]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> Index()
         {
             if (_dataCookies.TryGetPlayerCode(out var code))
@@ -41,7 +42,7 @@ namespace NdcBingo.Controllers
             
             _logger.LogInformation("New player");
 
-            return RedirectToAction("New", "Players");
+            return RedirectToAction("New", "Players", new { returnUrl = Url.Action("Index")});
         }
     }
 }
